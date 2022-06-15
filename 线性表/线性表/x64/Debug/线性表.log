@@ -1,0 +1,3 @@
+﻿  N2_dynamicSequenceList.c
+D:\No03.Code\data-structure-408\线性表\线性表\N2_dynamicSequenceList.c(21,2): warning C4091: “typedef ”: 没有声明变量时忽略“SeqList”的左侧
+  线性表.vcxproj -> D:\No03.Code\data-structure-408\线性表\x64\Debug\线性表.exe
