@@ -56,12 +56,59 @@ void IncreaseSize(struct SeqList *L, int len) {
         }
     }
 }
+/**
+ * 在规定的位置插入一个元素.
+ * 
+ * \param L 被操作的表
+ * \param i 在哪个位置(从0开始)
+ * \param element 要插入的元素
+ */
+void ListInsert(struct SeqList* L, int i, int element) {
+    // 把要插入位置以及后面的元素依次往后挪
+    // 判断表是否已经满了
+    if (L->length == L->maxSize) {
+        printf("插入失败，表已经满了");
+    }
+    // 输入的位置比已有的空间大
+    if (i >= L->maxSize) {
+        printf("位置输入错误");
+    }
+    else {
+        // 解决如果在空的情况下在0的位置插入元素，因为没有-1位置所以会报错
+        if (i != 0 || L->length != 0) {
+            // 先把这个位置以及后面的元素往后移一位
+            // i从当前存放位置的后一个开始
+            for (int currentIndex = L->length; currentIndex >= i; currentIndex--)
+            {
+                // 把当前位置前面的元素放过来
+                L->data[currentIndex] = L->data[currentIndex - 1];
+            }
+        }
+        // 把元素放进要放的位置
+        L->data[i] = element;
+        L->length++;
+    }
+
+}
+/**
+ * 打印表中的所有数据.
+ * 
+ * \param seqList
+ */
+void displaySeqList(struct SeqList seqList) {
+    for (int i = 0; i < seqList.length ; i++) {
+        printf("data[%d]=%d\n", i, seqList.data[i]);
+    }
+}
 int main() {
     struct SeqList seqList;
     InitList(&seqList);
-    IncreaseSize(&seqList,20);
-    int* a;
-    int b = 10;
-    a = &b;
+    ListInsert(&seqList, 0, 0);
+    ListInsert(&seqList, 1, 1);
+    ListInsert(&seqList, 2, 2);
+    ListInsert(&seqList, 3, 3);
+    ListInsert(&seqList, 4, 4);
+    ListInsert(&seqList, 1, 8);
+    displaySeqList(seqList);
     return 0;
 }
