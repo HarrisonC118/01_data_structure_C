@@ -23,8 +23,14 @@ typedef struct SeqList {
 void InitList(struct SeqList *L) {
     // 申请默认的内存空间，空间的首地址给了data，空间的大小为int的大小乘int的数量
     L->data = (int *)malloc(sizeof(int) * InitSize);
-    L->length = 0;
-    L->maxSize = InitSize;
+    if(L->data != NULL) {
+        for (int i = 0; i < InitSize; i++) {
+            L->data[i] = 0;
+        }
+        L->length = 0;
+        L->maxSize = InitSize;
+    }
+
 }
 /**
  * 增加顺序表长度
@@ -35,14 +41,20 @@ void IncreaseSize(struct SeqList *L, int len) {
     // 开辟新空间，然后把以前的数据移过去
     int* newList;
     newList = (int *)malloc(sizeof(int) * (L->maxSize + len));
-    for (int i = 0; i < L->length; i++) {
-        newList[i] = L->data[i];
+    // 查看内存空间是否成功分配
+    if (newList != NULL && L->data != NULL) {
+        // 确保原来的长度比新扩展的空间小
+        if (L->length < sizeof(*newList)/sizeof(int)) {
+            for (int i = 0; i < L->length; i++) {
+                newList[i] = L->data[i];
+            }
+            // 增加最大容量
+            L->maxSize = L->maxSize + len;
+            // 释放旧内存，并把数据指向新地址
+            free(L->data);
+            L->data = newList;
+        }
     }
-    // 增加最大容量
-    L->maxSize = L->maxSize + len;
-    // 释放旧内存，并把数据指向新地址
-    free(L->data);
-    L->data = newList;
 }
 int main() {
     struct SeqList seqList;
@@ -51,7 +63,5 @@ int main() {
     int* a;
     int b = 10;
     a = &b;
-    printf("a的值为%p\n", a);
-    printf("*a的值为%d\n", *a);
     return 0;
 }

@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   N1_staticSequenceList.c
- * \brief  固定长度的顺序表(利用数组实现，数据在内存中连续存放)
+ * \brief  
  * 
  * \author hatcherCheung
  * \date   June 2022
@@ -24,11 +24,15 @@ void InitList(struct SqList* L) {
 	for (int i = 0; i < MaxSize; i++) {
 		L->data[i] = 0;
 	}
-	// 默认数量为0
+	// 默认默认长度为0
 	L->length = 0;
 }
+
 int main() {
 	struct SqList sqList;
 	InitList(&sqList);
+	for (int i = 0; i < 10; i++) {
+		printf("data[%d]=%d\n", i, sqList.data[i]);
+	}
 	return 0;
 }
